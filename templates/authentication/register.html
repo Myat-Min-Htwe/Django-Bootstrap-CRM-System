@@ -1,0 +1,67 @@
+{% extends 'base_auth.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-3"></div>
+
+    <div class="col-md-6 mt-5">
+
+        <div class="card mb-3 mt-5">
+            <div class="row g-0">
+                <div class="col-md-4 mt-4">
+                    <img src="{% static 'img/reg.jpg' %}" class="img-fluid rounded-start" alt="phae_wah pic">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body bg-secondary-subtle">
+                        <h5 class="card-title text-center">Create a user account</h5>
+
+                        <form action="{% url 'register' %}" method="POST">
+                            {% csrf_token %}
+
+                            
+
+                            <div class="form-group p-4">
+
+                                {% include 'partials/_messages.html' %}
+
+                                <input type="text" name="username" id="usernameField"
+                                    class="form-control form-control-sm border-0 mb-4 mt-4"
+                                    value="{{fieldValues.username}}" placeholder="Username" required>
+                                <div class="invalid-feedback invalid_feedback" style="display: none;"></div>
+                                <p class="text-sm text-success usernameSuccessOutput"></p>
+
+                                <input type="email" name="email" id="emailField"
+                                    class="form-control form-control-sm border-0 mb-4"
+                                    value="{{fieldValues.email}}" placeholder="Email" required>
+                                <div class="invalid-feedback emailfeedBackArea" style="display: none;"></div>
+
+
+                                <input type="password" name="password" id="passwordField"
+                                    class="form-control form-control-sm border-0"
+                                    placeholder="Password" required>
+                                <small class="float-end showPasswordToggle viewpassword py-1 mt-2">SHOW</small>
+                                <div class="mt-3"><small>If you have a account, <a href="{% url 'login' %}">Login </a>here.</small></div>
+                            </div>
+
+                            <div class="d-grid mt-4">
+                                <input type="submit" value="Register"
+                                    class="btn btn-primary btn-sm col-4 mx-auto submit-btn">
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-md-3"></div>
+</div>
+
+<script src="{% static 'js/register.js' %}"></script>
+
+{% endblock %}
