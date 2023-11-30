@@ -1,39 +1,78 @@
 {% extends 'base.html' %}
 
+{% load static %}
 
 {% block content %}
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Dashboard</h1>
-    <div class="btn-toolbar mb-2 mb-md-0">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+
+<div class="container" style="background-color: var(--bs-secondary-bg);min-height: 100vh;">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    
+    <a href="{% url 'add_customer' %}" class="btn btn-sm btn-secondary">
+      <svg class="bi"><use xlink:href="#plus-circle" /></svg>
+      Add New Customer
+    </a>
+    <div class="btn-toolbar mb-2 mb-md-0 d-none d-md-inline">
       <div class="btn-group me-2">
-        <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-        <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+        <input class="form-control form-control-sm me-2 focus-ring focus-ring-dark border-dark-subtle" type="search"
+          placeholder="Search" aria-label="Search">
+        <button type="button" class="btn btn-sm btn-outline-secondary">Search</button>
       </div>
-      <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1">
-        <svg class="bi"><use xlink:href="#calendar3"/></svg>
-        This week
-      </button>
     </div>
   </div>
 
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb breadcrumb-chevron p-3 bg-body-tertiary rounded-3">
+        <li class="breadcrumb-item">
+          <a class="link-body-emphasis fw-semibold text-decoration-none" href="{% url 'crms' %}">Customers</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+          Lists
+        </li>
+      </ol>
+    </nav>
+
+      {% include 'partials/_messages.html' %}
+
+      <div class="overflow-x-auto">
+        <table class="table table-secondary table-bordered table-striped table-hover">
+          <thead class="table-dark">
+            <tr>
+              <th scope="col">No.</th>
+              <th scope="col">Company Name</th>
+              <th scope="col">Customer Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Phone</th>
+              <th scope="col">Address</th>
+              <th scope="col">Industry</th>
+              <th scope="col">Modified_date</th>
+              <th scope="col">Created_date</th>
+              <th scope="col">Options</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for customer in customers %}
+            <tr>
+              <th scope="row">{{forloop.counter}}</th>
+              <th class="text-primary">{{customer.com_name}}</th>
+              <td>{{customer.cs_name}}</td>
+              <td>{{customer.email}}</td>
+              <td>{{customer.phone}}</td>
+              <td>{{customer.address}}</td>
+              <td>{{customer.industry}}</td>
+              <td class="text-success">{{customer.modified_date}}</td>
+              <td class="text-danger">{{customer.created_date}}</td>
+              <td>
+                <a href="{% url 'edit_customer' customer.id %}" class="ms-3 btn btn-sm btn-secondary"><i class="bi bi-pencil"></i> Edit</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    
   <!-- <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas> -->
-<h1>Customers List</h1>
 
-
-<ul class="list-group">
-    <li class="list-group-item">Hello</li>
-    <li class="list-group-item">Hello</li>
-    <li class="list-group-item">Hello</li>
-    <li class="list-group-item">Hello</li>
-    <li class="list-group-item">Hello</li>
-    <li class="list-group-item">Hello</li>
-    <li class="list-group-item">Hello</li>
-    <li class="list-group-item">Hello</li>
-    <li class="list-group-item">Hello</li>
-    <li class="list-group-item">Hello</li>
-    <li class="list-group-item">Hello</li>
-    <li class="list-group-item">Hello</li>
-    <li class="list-group-item">Hello</li>
-</ul>
+</div>
 
 {% endblock %}

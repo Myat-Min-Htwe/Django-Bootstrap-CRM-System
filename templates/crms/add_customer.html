@@ -1,4 +1,90 @@
 {% extends 'base.html' %}
 
+{% load static %}
 
-<h1>Add Customers</h1>
+{% block content %}
+
+<div class="container">
+<div class="mt-4">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb breadcrumb-chevron p-3 bg-body-tertiary rounded-3">
+        <li class="breadcrumb-item">
+          <a class="link-body-emphasis fw-semibold text-decoration-none" href="{% url 'crms' %}">Customers</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+          Create a new customer
+        </li>
+      </ol>
+    </nav>
+</div>
+    
+  <!-- <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas> -->
+<div class="row mt-5">
+  <div class="col-md-8">
+    <div class="card border-0" style="background-color: var(--bs-secondary-bg);min-height: 100vh;">
+
+        <form action="{% url 'add_customer' %}" method="POST" class="px-5">
+          {% csrf_token %}
+
+          <div class="col-md-8">
+            {% include 'partials/_messages.html' %}
+          </div>
+    
+          <div class="mb-4 col-md-8">
+            <input type="text" name="com_name" value="{{values.com_name}}" class="form-control form-control-sm focus-ring focus-ring-dark" placeholder="Company name">
+          </div>
+          <div class="mb-4 col-md-8">
+            <input type="text" name="cs_name" value="{{values.cs_name}}" class="form-control form-control-sm focus-ring focus-ring-dark" placeholder="Customer name">
+          </div>
+          <div class="mb-4 col-md-8">
+            <input type="email" name="email" value="{{values.email}}" class="form-control form-control-sm focus-ring focus-ring-dark" placeholder="Email address">
+          </div>
+          <div class="mb-4 col-md-8">
+            <input type="number" name="phone" value="{{values.phone}}" class="form-control form-control-sm focus-ring focus-ring-dark" placeholder="Phone number">
+          </div>
+          <div class="mb-4 col-md-8">
+            <input type="text" name="address" value="{{values.address}}" class="form-control form-control-sm focus-ring focus-ring-dark" placeholder="Address">
+          </div>
+          <div class="mb-4 col-md-8">
+            <select class="form-select form-select-sm" name="industry">
+              {% for industry in industries %}
+              <option name="industry" value="{{ industry.name }}">{{ industry.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <!-- <div class="row g-3 align-items-center mb-4">
+            <div class="col-auto col-md-4">
+              <input type="date" name="modified_date" class="form-control form-control-sm focus-ring focus-ring-dark">
+            </div>
+            <div class="col-auto">
+              <span class="form-text">
+                Modified Date
+              </span>
+            </div>
+          </div>
+          <div class="row g-3 align-items-center">
+            <div class="col-auto col-md-4">
+              <input type="date" name="created_date" class="form-control form-control-sm focus-ring focus-ring-dark">
+            </div>
+            <div class="col-auto">
+              <span class="form-text">
+                Created Date
+              </span>
+            </div>
+          </div> -->
+
+          <div class="d-grid mt-5">
+            <input type="submit" value="Create"
+                class="btn btn-dark btn-sm col-md-2">
+          </div>
+    
+        </form>
+      </div>
+  </div>
+  <div class="col-md-4"></div>
+</div>
+
+  
+</div>
+
+{% endblock %}
