@@ -206,6 +206,15 @@ def addToTask(request, note_id):
     return render(request, 'todo/note_list.html', {'notes': NoteModel.objects.all()})
 
 
+@login_required(login_url='/authentication/login')
+def delete_task(request,note_id):
+    note = NoteModel.objects.get(id=note_id)
+
+    note.delete()
+    messages.success(request, 'Delete Task successfully')
+    return redirect('task_list')
+
+
 def opportunity(request):
 
     return render(request, 'crms/opportunity.html')

@@ -54,19 +54,25 @@
                   {% if note.assigned_by %}
                     {% if note.assigned_by == user %}
                       <p class="card-text">
-                        <small class="text-secondary ms-2">Added by You</small>
+                        <small class="text-secondary ms-2">Added by <span class="text-primary">You</span></small>
                       </p>
                     {% else %}
                       <p class="card-text">
-                        <small class="text-secondary ms-2">Added by {{ note.assigned_by.username }}</small>
+                        <small class="text-secondary ms-2">Added by <span class="text-primary">{{ note.assigned_by.username }}</span></small>
                       </p>
                     {% endif %}
                   {% endif %}
                   <form action="{% url 'add_task' note.id %}" method="POST" class="me-4">
                     {% csrf_token %}
+                    {% if note.assigned_by != user %}
+                    <button type="submit" class="btn d-none btn-link link-primary link-offset-3 link-underline-opacity-25 link-underline-opacity-100-hover">
+                      Add to Task
+                    </button>
+                    {% else %}
                     <button type="submit" class="btn btn-link link-primary link-offset-3 link-underline-opacity-25 link-underline-opacity-100-hover">
                       Add to Task
                     </button>
+                    {% endif %}
                   </form>
                 </div>
                 

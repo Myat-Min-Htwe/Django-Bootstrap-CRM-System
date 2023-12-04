@@ -8,6 +8,8 @@
 
 <div class="container">
 
+  {% include 'partials/_messages.html' %}
+
 <div class="mt-4">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb breadcrumb-chevron p-3 bg-body-tertiary rounded-3">
@@ -38,16 +40,70 @@
 
     <div class="card border-0 mt-5" style="background-color: var(--bs-secondary-bg);min-height: 100vh;">
 
-      <h2>Tasks List</h2>
-      <ul>
         {% for task in tasks %}
-          <li>{{ task.note.customer.com_name }} - {{ task.note.note }} (Assigned by: {{ task.note.assigned_by.username }})</li>
-        {% endfor %}
-      </ul>
+
+      <div class="hstack gap-2 mb-3">
+        <div class="px-2 py-1 me-auto bg-warning bg-opacity-50 border rounded-end" style="width: 90%;">
+          <p class="text-break">
+            <span class="fw-semibold">{{ task.note.customer.com_name }} - </span>
+            <span id="taskChange">( {{ task.note.note }} )</span>
+          </p>
+        </div>
+        {% if task.note.assigned_by == user %}
+        <!-- <button type="button" class="btn btn-outline-success" data-bs-toggle="modal"
+         data-bs-target="#taskModal"><i class="bi bi-check2-all"></i></button>
+         
+         <div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel"
+         aria-hidden="true">
+         <div class="modal-dialog">
+           <div class="modal-content bg-success">
+             <div class="modal-header">
+               <h1 class="modal-title fs-5" id="taskModalLabel">Complete Task</h1>
+               <button type="button" class="btn-close focus-ring focus-ring-secondary" data-bs-dismiss="modal"
+                 aria-label="Close"></button>
+             </div>
+             
+             <div class="modal-footer">
+               <a href="" class="btn btn-sm btn-success" id="taskMarkBtn">
+                <i class="bi bi-check2"></i> Done</a>
+             </div>
+           </div>
+         </div>
+       </div> -->
+
+        <!-- <div class="vr"></div> -->
+        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" 
+        data-bs-target="#dtaskModal"><i class="bi bi-x-lg"></i></button>
+         <!-- Modal -->
+         <div class="modal fade" id="dtaskModal" tabindex="-1" aria-labelledby="dtaskModalLabel"
+         aria-hidden="true">
+         <div class="modal-dialog">
+           <div class="modal-content bg-info">
+             <div class="modal-header">
+               <h1 class="modal-title fs-5" id="dtaskModalLabel">Remove Task</h1>
+               <button type="button" class="btn-close focus-ring focus-ring-secondary" data-bs-dismiss="modal"
+                 aria-label="Close"></button>
+             </div>
+             
+             <div class="modal-footer">
+               <a href="{% url 'delete_task' task.note.id %}" class="btn btn-sm btn-info">
+                <i class="bi bi-check2"></i> Confirm</a>
+             </div>
+           </div>
+         </div>
+       </div>
+        {% else %}
+        <p class="fw-semibold text-primary">{{ task.note.assigned_by.username }}</p>
+        {% endif %}
+      </div>
         
+      {% endfor %}
     </div>
 
   
 </div>
+
+<!-- <script src="{% static 'js/task.js' %}"></script> -->
+
 
 {% endblock %}

@@ -13,6 +13,7 @@ urlpatterns = [
 
     path('add-to-task-list/<int:note_id>/', views.addToTask, name="add_task"),
     path('task-list/', views.listTasks, name="task_list"),
+    path('delete-task/<int:note_id>/', views.delete_task, name="delete_task"),
 
     path('opportunity-chart/', views.opportunity, name="opportunity"),
 ]
