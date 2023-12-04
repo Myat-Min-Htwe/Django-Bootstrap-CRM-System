@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+
+<div class="container">
+
+  {% include 'partials/_messages.html' %}
+
+<div class="mt-4">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb breadcrumb-chevron p-3 bg-body-tertiary rounded-3">
+        <li class="breadcrumb-item">
+          <a class="link-body-emphasis fw-semibold text-decoration-none" href="{% url 'crms' %}">Customers</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a class="link-body-emphasis fw-semibold text-decoration-none" href="{% url 'task_list' %}">Tasks</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+          Notes
+        </li>
+      </ol>
+    </nav>
+</div>
+
+<div class="d-flex justify-content-end flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <div class="btn-toolbar mb-2 mb-md-0 d-none d-md-inline">
+    <div class="btn-group me-2">
+      <input class="form-control form-control-sm me-2 focus-ring focus-ring-dark border-dark-subtle" type="search"
+        placeholder="Search" aria-label="Search">
+      <button type="button" class="btn btn-sm btn-outline-secondary">Search</button>
+    </div>
+  </div>
+</div>
+    
+  <!-- <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas> -->
+
+    <div class="card border-0 mt-5" style="background-color: var(--bs-secondary-bg);min-height: 100vh;">
+
+
+        <div class="row">
+          {% for note in notes %}
+            <div class="col-sm-4 col-md-6 col-lg-4 mb-3">
+              <div class="card bg-dark">
+                <div class="card-body">
+                  
+                  <h5 class="card-title text-info">{{ note.customer.com_name }}</h5>
+                  <p class="card-text text-warning mb-5">{{ note.note }}</p>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  {% if note.assigned_by %}
+                    {% if note.assigned_by == user %}
+                      <p class="card-text">
+                        <small class="text-secondary ms-2">Added by You</small>
+                      </p>
+                    {% else %}
+                      <p class="card-text">
+                        <small class="text-secondary ms-2">Added by {{ note.assigned_by.username }}</small>
+                      </p>
+                    {% endif %}
+                  {% endif %}
+                  <form action="{% url 'add_task' note.id %}" method="POST" class="me-4">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-link link-primary link-offset-3 link-underline-opacity-25 link-underline-opacity-100-hover">
+                      Add to Task
+                    </button>
+                  </form>
+                </div>
+                
+              </div>
+            </div>
+          {% endfor %}
+          </div>
+        
+    </div>
+
+  
+</div>
+
+{% endblock %}

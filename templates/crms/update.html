@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 
 <div class="container">
-<div class="mt-4">
+  <div class="mt-4">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb breadcrumb-chevron p-3 bg-body-tertiary rounded-3">
         <li class="breadcrumb-item">
@@ -18,77 +18,88 @@
         </li>
       </ol>
     </nav>
-</div>
-    
+  </div>
+
+  {% include 'partials/_messages.html' %}
+
   <!-- <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas> -->
-<div class="row mt-5">
-  <div class="col-md-8">
-    <div class="card border-0" style="background-color: var(--bs-secondary-bg);min-height: 100vh;">
+  <div class="row mt-5">
+    <div class="col-md-8">
+      <div class="card border-0" style="background-color: var(--bs-secondary-bg);min-height: 100vh;">
 
         <form action="{% url 'edit_customer' customers.id %}" method="POST" class="px-5">
           {% csrf_token %}
-    
-          <div class="col-md-8">
-            {% include 'partials/_messages.html' %}
-          </div>
-          
+
           <div class="d-flex">
             <div class="mb-4 col-md-8">
-                <input type="text" name="com_name" value="{{customers.com_name}}" class="form-control form-control-sm focus-ring focus-ring-dark" placeholder="Company name">
+              <input type="text" name="com_name" value="{{customers.com_name}}"
+                class="form-control form-control-sm focus-ring focus-ring-dark" placeholder="Company name">
             </div>
-            
+
             <!-- Button trigger modal -->
             <div class="col-md-4 ms-5">
-            <button type="button" class="btn btn-danger btn-sm d-flex" data-bs-toggle="modal" data-bs-target="#deleteModal">
+              <button type="button" class="btn btn-danger btn-sm d-flex" data-bs-toggle="modal"
+                data-bs-target="#deleteModal">
                 <i class="bi bi-trash2-fill mt-1"></i> Delete <span class="d-none d-md-block">Customer</span>
-            </button>
+              </button>
             </div>
-            
+
             <!-- Modal -->
-            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
+            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="deleteModalLabel"><span class="text-primary">{{ customers.com_name }}</span> | 
-                        <span class="text-body-secondary fs-6">{{customers.cs_name}}</span></h1>
-                    <button type="button" class="btn-close focus-ring focus-ring-secondary" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body text-danger">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="deleteModalLabel"><span class="text-primary">{{ customers.com_name }}</span> |
+                      <span class="text-body-secondary fs-6">{{customers.cs_name}}</span>
+                    </h1>
+                    <button type="button" class="btn-close focus-ring focus-ring-secondary" data-bs-dismiss="modal"
+                      aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body text-danger fw-medium">
                     Are you sure want to delete this customer ?
-                    </div>
-                    <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">No</button>
-                    <a href="{% url 'delete_customer' customers.id %}" class="btn btn-sm btn-danger">Yes</a>
-                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal"><i
+                        class="bi bi-x-lg"></i> No</button>
+                    <a href="{% url 'delete_customer' customers.id %}" class="btn btn-sm btn-danger"><i
+                        class="bi bi-check2"></i> Yes</a>
+                  </div>
                 </div>
-                </div>
+              </div>
             </div>
 
           </div>
           <div class="mb-4 col-md-8">
-            <input type="text" name="cs_name" value="{{customers.cs_name}}" class="form-control form-control-sm focus-ring focus-ring-dark" placeholder="Customer name">
+            <input type="text" name="cs_name" value="{{customers.cs_name}}"
+              class="form-control form-control-sm focus-ring focus-ring-dark" placeholder="Customer name">
+          </div>
+
+          <div class="mb-4 col-md-8">
+            <input type="email" name="email" value="{{customers.email}}"
+              class="form-control form-control-sm focus-ring focus-ring-dark" placeholder="Email address">
           </div>
           <div class="mb-4 col-md-8">
-            <input type="email" name="email" value="{{customers.email}}" class="form-control form-control-sm focus-ring focus-ring-dark" placeholder="Email address">
+            <input type="number" name="phone" value="{{customers.phone}}"
+              class="form-control form-control-sm focus-ring focus-ring-dark" placeholder="Phone number">
           </div>
           <div class="mb-4 col-md-8">
-            <input type="number" name="phone" value="{{customers.phone}}" class="form-control form-control-sm focus-ring focus-ring-dark" placeholder="Phone number">
-          </div>
-          <div class="mb-4 col-md-8">
-            <input type="text" name="address" value="{{customers.address}}" class="form-control form-control-sm focus-ring focus-ring-dark" placeholder="Address">
+            <input type="text" name="address" value="{{customers.address}}"
+              class="form-control form-control-sm focus-ring focus-ring-dark" placeholder="Address">
           </div>
           <div class="mb-4 col-md-8">
             <select class="form-select form-select-sm" name="industry">
-                <option selected name="industry" value="{{ customers.industry }}">{{ customers.industry }}</option>
+              <option selected name="industry" value="{{ customers.industry }}">{{ customers.industry }}</option>
               {% for industry in industries %}
-                <option name="industry" value="{{ industry.name }}">{{ industry.name }}</option>
+              <option name="industry" value="{{ industry.name }}">{{ industry.name }}</option>
               {% endfor %}
             </select>
           </div>
 
           <div class="row g-3 align-items-center mb-4">
             <div class="col-auto col-md-4">
-              <input type="date" name="modified_date" class="form-control form-control-sm focus-ring focus-ring-dark" required>
+              <input type="date" name="modified_date" class="form-control form-control-sm focus-ring focus-ring-dark"
+                required>
             </div>
             <div class="col-auto">
               <span class="form-text">
@@ -110,14 +121,45 @@
           <div class="d-grid mt-5">
             <input type="submit" value="Save" class="btn btn-dark btn-sm col-md-2">
           </div>
-    
+
         </form>
       </div>
-  </div>
-  <div class="col-md-4"></div>
-</div>
+    </div>
 
-  
+    <div class="col-md-4">
+      <div class="col-md-4 ms-5">
+        <button type="button" class="btn btn-secondary btn-sm d-flex" data-bs-toggle="modal"
+          data-bs-target="#noteModal">
+          <i class="bi bi-journal-plus mt-1"></i>&nbsp;<span class="d-none d-md-block">Add</span> Note
+        </button>
+      </div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="noteModal" tabindex="-1" aria-labelledby="noteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="noteModalLabel"><p class="text-body-secondary fs-6">Add Note for
+              <span class="underline"> - {{customers.com_name}}</span></p></h1>
+              <button type="button" class="btn-close focus-ring focus-ring-secondary" data-bs-dismiss="modal"
+                aria-label="Close"></button>
+            </div>
+            <form action="{% url 'add_note' customers.id %}" method="POST">
+              {% csrf_token %}
+              <div class="modal-body">
+                <textarea name="note" class="form-control focus-ring focus-ring-dark border-secondary" rows="3" required></textarea>
+              </div>
+              <div class="modal-footer">
+                <input type="submit" class="btn btn-sm btn-dark" value="Add">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 </div>
 
 {% endblock %}

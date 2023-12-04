@@ -63,7 +63,7 @@
               <td class="text-success">{{customer.modified_date}}</td>
               <td class="text-danger">{{customer.created_date}}</td>
               <td>
-                <a href="{% url 'edit_customer' customer.id %}" class="ms-3 btn btn-sm btn-secondary"><i class="bi bi-pencil"></i> Edit</a>
+                <a href="{% url 'edit_customer' customer.id %}" class="ms-3 btn btn-sm btn-primary"><i class="bi bi-pencil"></i> Edit</a>
               </td>
             </tr>
             {% endfor %}
