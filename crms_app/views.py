@@ -1,9 +1,13 @@
 from django.shortcuts import render,redirect
 from .models import CustomerModel,IndustryModel,NoteModel,TaskModel
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
+
 from django.contrib import messages
+
+from django.http import JsonResponse
+from django.utils import timezone
+from datetime import timedelta
+
 # Create your views here.
 
 
@@ -13,7 +17,8 @@ def index(request):
     if request.method == "GET":
         customers = CustomerModel.objects.all().order_by('-created_date')
         notes = NoteModel.objects.all()
-        return render(request, 'crms/index.html',{'customers':customers,'notes':notes})
+        tasks = TaskModel.objects.all()
+        return render(request, 'crms/index.html',{'customers':customers,'notes':notes,'tasks':tasks})
 
 
 @login_required(login_url='/authentication/login')
@@ -172,14 +177,27 @@ def addNote(request, pk):
 @login_required(login_url='/authentication/login')
 def listNotes(request):
     notes = NoteModel.objects.all()
-    return render(request, 'todo/note_list.html', {'notes': notes})
+    tasks = TaskModel.objects.all()
+    return render(request, 'todo/note_list.html', {'notes': notes,'tasks':tasks})
+
+@login_required(login_url='/authentication/login')
+def noteBadge(request):
+    notes = NoteModel.objects.all()
+    return render(request, 'partials/_sidebar.html', {'notes': notes})
+
+
+@login_required(login_url='/authentication/login')
+def taskBadge(request):
+    tasks = TaskModel.objects.all()
+    return render(request, 'partials/_sidebar.html', {'tasks': tasks})
 
 
 
 @login_required(login_url='/authentication/login')
 def listTasks(request):
     tasks = TaskModel.objects.all()
-    return render(request, 'todo/task_list.html', {'tasks': tasks})
+    notes = NoteModel.objects.all()
+    return render(request, 'todo/task_list.html', {'tasks': tasks,'notes':notes})
 
 
 @login_required(login_url='/authentication/login')
@@ -215,6 +233,24 @@ def delete_task(request,note_id):
     return redirect('task_list')
 
 
+@login_required(login_url='/authentication/login')
 def opportunity(request):
+    notes = NoteModel.objects.all()
+    tasks = TaskModel.objects.all()
+    return render(request, 'crms/opportunity.html',{'notes':notes,'tasks':tasks})
 
-    return render(request, 'crms/opportunity.html')
+
+@login_required(login_url='/authentication/login')
+def customer_data(request):
+    # Calculate the date 7 days ago
+    seven_days_ago = timezone.now() - timedelta(days=7)
+
+    # Filter customers created in the last 7 days
+    customers = CustomerModel.objects.filter(created_date__gte=seven_days_ago)
+
+    # Create a dictionary with 'created_date' and 'count' for each day
+    data = {
+        'labels': [customer.created_date.strftime('%Y-%m-%d') for customer in customers],
+        'dataValues': [customers.filter(created_date=date).count() for date in set(c.created_date for c in customers)],
+    }
+    return JsonResponse(data)

@@ -48,19 +48,19 @@
             <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
               aria-hidden="true">
               <div class="modal-dialog">
-                <div class="modal-content">
+                <div class="modal-content bg-danger">
                   <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="deleteModalLabel"><span class="text-primary">{{ customers.com_name }}</span> |
+                    <h1 class="modal-title fs-5" id="deleteModalLabel"><span class="text-light">{{ customers.com_name }}</span> | 
                       <span class="text-body-secondary fs-6">{{customers.cs_name}}</span>
                     </h1>
                     <button type="button" class="btn-close focus-ring focus-ring-secondary" data-bs-dismiss="modal"
                       aria-label="Close"></button>
                   </div>
-                  <div class="modal-body text-danger fw-medium">
+                  <div class="modal-body text-light fw-medium">
                     Are you sure want to delete this customer ?
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal"><i
+                    <button type="button" class="btn btn-sm btn-danger" data-bs-dismiss="modal"><i
                         class="bi bi-x-lg"></i> No</button>
                     <a href="{% url 'delete_customer' customers.id %}" class="btn btn-sm btn-danger"><i
                         class="bi bi-check2"></i> Yes</a>

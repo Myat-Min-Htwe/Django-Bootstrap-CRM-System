@@ -15,5 +15,6 @@ urlpatterns = [
     path('task-list/', views.listTasks, name="task_list"),
     path('delete-task/<int:note_id>/', views.delete_task, name="delete_task"),
 
-    path('opportunity-chart/', views.opportunity, name="opportunity"),
+    path('customer_data_chart/', views.opportunity, name="opportunity"),
+    path('get_customer_count_data/', views.customer_data, name="customer_data"),
 ]
