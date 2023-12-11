@@ -1,10 +1,13 @@
-const taskMarkBtn = document.querySelector('#taskMarkBtn');
-const taskChangeField = document.querySelector('#taskChange');
+console.log('hiiii')
 
-console.log("hello")
 
-taskMarkBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-
-    taskChangeField.classList.add("text-decoration-line-through");
-})
+const sr = ScrollReveal ({
+    distance: '80px',
+    duration: 800,
+    delay: 450,
+    reset: true
+  });
+  
+  
+sr.reveal('.task-text',{delay:400, origin: 'top'});
+sr.reveal('.searchtask',{delay:200, origin: 'top'});

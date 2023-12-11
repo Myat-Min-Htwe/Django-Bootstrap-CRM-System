@@ -9,7 +9,7 @@
 <div class="container">
   <div class="mt-4">
     <nav aria-label="breadcrumb">
-      <ol class="breadcrumb breadcrumb-chevron p-3 bg-body-tertiary rounded-3">
+      <ol class="breadcrumb breadcrumb-chevron p-3 bg-dark-subtle rounded-3">
         <li class="breadcrumb-item">
           <a class="link-body-emphasis fw-semibold text-decoration-none" href="{% url 'crms' %}">Customers</a>
         </li>
@@ -25,7 +25,7 @@
   <!-- <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas> -->
   <div class="row mt-5">
     <div class="col-md-8">
-      <div class="card border-0" style="background-color: var(--bs-secondary-bg);min-height: 100vh;">
+      <div class="card border-0" style="background-color: var(--bs-dark);min-height: 100vh;">
 
         <form action="{% url 'edit_customer' customers.id %}" method="POST" class="px-5">
           {% csrf_token %}
@@ -48,19 +48,19 @@
             <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
               aria-hidden="true">
               <div class="modal-dialog">
-                <div class="modal-content bg-danger">
+                <div class="modal-content bg-dark">
                   <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="deleteModalLabel"><span class="text-light">{{ customers.com_name }}</span> | 
-                      <span class="text-body-secondary fs-6">{{customers.cs_name}}</span>
+                    <h1 class="modal-title fs-5" id="deleteModalLabel"><span class="text-light">{{ customers.com_name }} | </span> 
+                      <span class="text-secondary fs-6">{{customers.cs_name}}</span>
                     </h1>
-                    <button type="button" class="btn-close focus-ring focus-ring-secondary" data-bs-dismiss="modal"
+                    <button type="button" class="btn-close focus-ring focus-ring-secondary btn btn-secondary" data-bs-dismiss="modal"
                       aria-label="Close"></button>
                   </div>
                   <div class="modal-body text-light fw-medium">
                     Are you sure want to delete this customer ?
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-danger" data-bs-dismiss="modal"><i
+                    <button type="button" class="btn btn-sm btn-dark" data-bs-dismiss="modal"><i
                         class="bi bi-x-lg"></i> No</button>
                     <a href="{% url 'delete_customer' customers.id %}" class="btn btn-sm btn-danger"><i
                         class="bi bi-check2"></i> Yes</a>
@@ -102,7 +102,7 @@
                 required>
             </div>
             <div class="col-auto">
-              <span class="form-text">
+              <span class="form-text text-light">
                 Modified Date
               </span>
             </div>
@@ -119,7 +119,7 @@
           </div> -->
 
           <div class="d-grid mt-5">
-            <input type="submit" value="Save" class="btn btn-dark btn-sm col-md-2">
+            <input type="submit" value="Save" class="btn btn-secondary btn-sm col-md-2">
           </div>
 
         </form>
@@ -137,20 +137,20 @@
       <!-- Modal -->
       <div class="modal fade" id="noteModal" tabindex="-1" aria-labelledby="noteModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-          <div class="modal-content">
+          <div class="modal-content bg-dark">
             <div class="modal-header">
-              <h1 class="modal-title fs-5" id="noteModalLabel"><p class="text-body-secondary fs-6">Add Note for
-              <span class="underline"> - {{customers.com_name}}</span></p></h1>
-              <button type="button" class="btn-close focus-ring focus-ring-secondary" data-bs-dismiss="modal"
+              <h1 class="modal-title fs-5" id="noteModalLabel"><p class="text-secondary fs-6">Add Note for
+              <span class="underline text-light"> - {{customers.com_name}}</span></p></h1>
+              <button type="button" class="btn-close focus-ring focus-ring-secondary btn btn-secondary" data-bs-dismiss="modal"
                 aria-label="Close"></button>
             </div>
             <form action="{% url 'add_note' customers.id %}" method="POST">
               {% csrf_token %}
               <div class="modal-body">
-                <textarea name="note" class="form-control focus-ring focus-ring-dark border-secondary" rows="3" required></textarea>
+                <textarea name="note" class="form-control focus-ring focus-ring-dark bg-dark text-light" rows="3" required></textarea>
               </div>
               <div class="modal-footer">
-                <input type="submit" class="btn btn-sm btn-dark" value="Add">
+                <input type="submit" class="btn btn-sm btn-secondary" value="Add">
               </div>
             </form>
           </div>

@@ -91,7 +91,7 @@ class LoginView(View):
             if user:
                 auth.login(request, user)
                 # messages.success(request, 'Welcome, '+user.username)
-                return redirect('crms')
+                return redirect('home')
             
             messages.error(request, 'Invalid username or password')
             return render(request, 'authentication/login.html')

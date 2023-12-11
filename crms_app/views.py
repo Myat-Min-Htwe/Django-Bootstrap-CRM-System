@@ -8,26 +8,55 @@ from django.http import JsonResponse
 from django.utils import timezone
 from datetime import timedelta
 
+from django.db.models import Q
+
+from django.core.paginator import Paginator
+
 # Create your views here.
 
+def search_by(request):
+    search = request.GET.get('search')
+
+    if search:
+        customers = CustomerModel.objects.filter(
+            Q(com_name__icontains=search) | 
+            Q(cs_name__icontains=search) 
+        )
+        notes = NoteModel.objects.all()
+        tasks = TaskModel.objects.all()
+        return render(request, 'crms/index.html',{'customers':customers,'notes':notes,'tasks':tasks,'cls':customers})
+    else:
+        notes = NoteModel.objects.all()
+        tasks = TaskModel.objects.all()
+        customers = CustomerModel.objects.all().order_by('-created_date')
+        return render(request, 'crms/index.html',{'customers':customers,'notes':notes,'tasks':tasks})
+    
 
 
 @login_required(login_url='/authentication/login')
 def index(request):
-    if request.method == "GET":
-        customers = CustomerModel.objects.all().order_by('-created_date')
-        notes = NoteModel.objects.all()
-        tasks = TaskModel.objects.all()
-        return render(request, 'crms/index.html',{'customers':customers,'notes':notes,'tasks':tasks})
+    notes = NoteModel.objects.all()
+    tasks = TaskModel.objects.all()
+    customers = CustomerModel.objects.all().order_by('-created_date')
+
+    paginator = Paginator(customers, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'crms/index.html',{'customers':page_obj,'notes':notes,'tasks':tasks})
 
 
 @login_required(login_url='/authentication/login')
 def add_customer(request):
 
+    notes = NoteModel.objects.all()
+    tasks = TaskModel.objects.all()
+
     industries = IndustryModel.objects.all()
     context = {
         'industries':industries,
-        'values':request.POST
+        'values':request.POST,
+        'notes':notes,
+        'tasks':tasks
     }
     if request.method == "GET":
         return render(request, 'crms/add_customer.html',context)
@@ -82,12 +111,17 @@ def add_customer(request):
 
 @login_required(login_url='/authentication/login')
 def edit_customer(request, pk):
+
+    notes = NoteModel.objects.all()
+    tasks = TaskModel.objects.all()
     
     customers = CustomerModel.objects.get(id=pk)
     industries = IndustryModel.objects.all()
     context = {
         'customers': customers,
-        'industries': industries
+        'industries': industries,
+        'notes':notes,
+        'tasks':tasks
     }
     if request.method == "GET":
         return render(request, 'crms/update.html', context)
@@ -205,8 +239,9 @@ def addToTask(request, note_id):
     note = NoteModel.objects.get(id=note_id)
 
     if request.method == "POST":
+
         if TaskModel.objects.filter(note=note).exists():
-            messages.warning(request, 'Note is already in Tasks-List')
+            messages.warning(request, 'Note is already in Tasks, Check Task-List')
         else:
             task = TaskModel.objects.create(
                 note=note,
@@ -221,7 +256,7 @@ def addToTask(request, note_id):
             messages.success(request, 'Note added to task successfully')
             return redirect('task_list')
 
-    return render(request, 'todo/note_list.html', {'notes': NoteModel.objects.all()})
+    return render(request, 'todo/note_list.html', {'notes': NoteModel.objects.all(),'tasks': TaskModel.objects.all()})
 
 
 @login_required(login_url='/authentication/login')
@@ -254,3 +289,22 @@ def customer_data(request):
         'dataValues': [customers.filter(created_date=date).count() for date in set(c.created_date for c in customers)],
     }
     return JsonResponse(data)
+
+
+
+@login_required(login_url='/authentication/login')
+def dashboard(request):
+
+    notes = NoteModel.objects.all()
+    tasks = TaskModel.objects.all()
+    
+    customers = CustomerModel.objects.all()
+    industries = IndustryModel.objects.all()
+    context = {
+        'customers': customers,
+        'industries': industries,
+        'notes':notes,
+        'tasks':tasks
+    }
+
+    return render(request, 'crms/dashboard.html',context)

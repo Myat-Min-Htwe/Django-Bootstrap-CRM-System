@@ -10,9 +10,9 @@
 
   {% include 'partials/_messages.html' %}
 
-<div class="mt-4">
+<div class="mt-4 link-text">
     <nav aria-label="breadcrumb">
-      <ol class="breadcrumb breadcrumb-chevron p-3 bg-body-tertiary rounded-3">
+      <ol class="breadcrumb breadcrumb-chevron p-3 bg-dark-subtle rounded-3">
         <li class="breadcrumb-item">
           <a class="link-body-emphasis fw-semibold text-decoration-none" href="{% url 'crms' %}">Customers</a>
         </li>
@@ -26,7 +26,7 @@
     </nav>
 </div>
 
-<div class="d-flex justify-content-end flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+<!-- <div class="d-flex justify-content-end flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom searchbox">
   <div class="btn-toolbar mb-2 mb-md-0 d-none d-md-inline">
     <div class="btn-group me-2">
       <input class="form-control form-control-sm me-2 focus-ring focus-ring-dark border-dark-subtle" type="search"
@@ -34,17 +34,17 @@
       <button type="button" class="btn btn-sm btn-outline-secondary">Search</button>
     </div>
   </div>
-</div>
+</div> -->
     
   <!-- <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas> -->
 
-    <div class="card border-0 mt-5" style="background-color: var(--bs-secondary-bg);min-height: 100vh;">
+    <div class="card border-0 mt-5" style="background-color: var(--bs-bg-dark);min-height: 100vh;">
 
 
-        <div class="row">
+        <div class="row notecard">
           {% for note in notes %}
             <div class="col-sm-4 col-md-6 col-lg-4 mb-3">
-              <div class="card bg-dark">
+              <div class="card" style="background-color: var(--bs-gray-800);">
                 <div class="card-body">
                   
                   <h5 class="card-title text-info">{{ note.customer.com_name }}</h5>
@@ -85,5 +85,8 @@
 
   
 </div>
+
+<script src="https://unpkg.com/scrollreveal"></script>
+<script src="{% static 'js/note.js' %}"></script>
 
 {% endblock %}
